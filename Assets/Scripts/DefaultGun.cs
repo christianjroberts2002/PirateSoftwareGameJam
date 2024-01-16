@@ -7,7 +7,17 @@ public class DefaultGun : MonoBehaviour, IGun
 {
     [SerializeField] GameObject bulletPrefabGO;
 
+    [SerializeField] private Transform bulletSpawnPoint;
+
+    
+
     private bool canShoot;
+
+    private void OnEnable()
+    {
+        bulletSpawnPoint = GameObject.Find("BulletSpawn").transform;
+        
+    }
 
     private void Start()
     {
@@ -25,7 +35,7 @@ public class DefaultGun : MonoBehaviour, IGun
     {
         get
         {
-            return 3f;
+            return 35f;
         }
     }
 
@@ -41,7 +51,7 @@ public class DefaultGun : MonoBehaviour, IGun
     {
         get
         {
-            return 3f;
+            return 8f;
         }
     }
 
@@ -49,7 +59,7 @@ public class DefaultGun : MonoBehaviour, IGun
     {
         get
         {
-            return .75f;
+            return .05f;
         }
     }
 
@@ -67,8 +77,11 @@ public class DefaultGun : MonoBehaviour, IGun
         if(canShoot)
         {
             canShoot = false;
-            Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+            GameObject newBullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.transform.rotation);
+            BulletMovement bulletMovement = newBullet.GetComponent<BulletMovement>();
+            bulletMovement.SetBulletSpeed(bulletSpeed);
             StartCoroutine(WaitForShootingSpeed(shootingSpeed));
+            Destroy(newBullet, bulletLife);
         }
 
     }

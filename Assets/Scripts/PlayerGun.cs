@@ -17,7 +17,6 @@ public class PlayerGun : MonoBehaviour
 
     }
 
-    private Gun DefaultGun = new Gun();
     
     
     
@@ -42,10 +41,5 @@ public class PlayerGun : MonoBehaviour
         }
     }
 
-    
-
-    public void SetGun()
-    {
-
-    }
+   
 }

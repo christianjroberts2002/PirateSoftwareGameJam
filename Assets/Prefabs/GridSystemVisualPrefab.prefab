@@ -99,6 +99,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc4aa0c0b9407ec43a0517506b158e30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  paintSprites:
+  - {fileID: 21300000, guid: d0c82c41401d8624c8fe65b6cabb7937, type: 3}
+  - {fileID: 21300000, guid: f7f1bd345fac2cb4881be0f707d47b1f, type: 3}
+  - {fileID: 21300000, guid: df694b2dc90537d459618725bacf315e, type: 3}
+  - {fileID: 21300000, guid: ff13d5c77518fd54593f255b949b421a, type: 3}
+  - {fileID: 21300000, guid: df694b2dc90537d459618725bacf315e, type: 3}
+  - {fileID: 21300000, guid: df694b2dc90537d459618725bacf315e, type: 3}
+  - {fileID: 21300000, guid: 4bc96a6c8518bbd4bbc962b25fb74ef7, type: 3}
+  - {fileID: 21300000, guid: df694b2dc90537d459618725bacf315e, type: 3}
+  - {fileID: 21300000, guid: 7d4df117911590145a0b4f555680bd5d, type: 3}
+  - {fileID: 21300000, guid: df694b2dc90537d459618725bacf315e, type: 3}
+  - {fileID: 21300000, guid: d680b41f639cf4648917650999d508d8, type: 3}
+  - {fileID: 21300000, guid: ca74d902206721e46afa004a6bc55b41, type: 3}
+  - {fileID: 21300000, guid: 10410c402e0183744b273f45c49e3582, type: 3}
+  GRID_HEIGHT: 0
+  GRID_WIDTH: 0
 --- !u!61 &4914613423815615649
 BoxCollider2D:
   m_ObjectHideFlags: 0

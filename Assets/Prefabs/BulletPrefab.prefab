@@ -12,10 +12,11 @@ GameObject:
   - component: {fileID: 7074316538281188175}
   - component: {fileID: 1089191517409859501}
   - component: {fileID: 4285978153631760608}
-  - component: {fileID: 7587575409921157560}
-  m_Layer: 0
+  - component: {fileID: 45805354213518517}
+  - component: {fileID: 5281645909337524388}
+  m_Layer: 7
   m_Name: BulletPrefab
-  m_TagString: Untagged
+  m_TagString: FriendlyBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -149,7 +150,19 @@ CircleCollider2D:
   m_Offset: {x: 3.0032273e-15, y: 0.21133341}
   serializedVersion: 2
   m_Radius: 0.5000002
---- !u!247 &7587575409921157560
+--- !u!114 &45805354213518517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3356844415359876889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5688d46bcc9f18c409c2c3648f30c240, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!247 &5281645909337524388
 ConstantForce2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -158,5 +171,5 @@ ConstantForce2D:
   m_GameObject: {fileID: 3356844415359876889}
   m_Enabled: 1
   m_Force: {x: 0, y: 0}
-  m_RelativeForce: {x: 15, y: 0}
+  m_RelativeForce: {x: 0, y: 0}
   m_Torque: 0
