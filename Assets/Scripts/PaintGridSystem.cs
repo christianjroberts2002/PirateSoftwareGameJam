@@ -48,7 +48,7 @@ public class PaintGridSystem : MonoBehaviour
             Destroy(gameObject);
         }
         gridPositions = new GridPosition[(int)GRID_HEIGHT, (int)GRID_WIDTH];
-        
+        CreateGrid();
     }
 
     private void Start()
@@ -95,14 +95,14 @@ public class PaintGridSystem : MonoBehaviour
 
     public int GetGridHeight()
     {
-        //return (int)(GRID_HEIGHT / CELL_HEIGHT);
-        return 4;
+        return (int)(GRID_HEIGHT);
+        
     }
 
     public int GetGridWidth()
     {
-        //return (int)(GRID_WIDTH / CELL_WIDTH);
-        return 4;
+        return (int)(GRID_WIDTH);
+        
     }
 
     public float GetCellSize()

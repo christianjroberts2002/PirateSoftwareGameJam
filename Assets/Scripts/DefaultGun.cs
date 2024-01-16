@@ -35,7 +35,7 @@ public class DefaultGun : MonoBehaviour, IGun
     {
         get
         {
-            return 35f;
+            return 5f;
         }
     }
 
@@ -51,7 +51,7 @@ public class DefaultGun : MonoBehaviour, IGun
     {
         get
         {
-            return 8f;
+            return 1f;
         }
     }
 

@@ -17,6 +17,7 @@ public class PlayerGun : MonoBehaviour
 
     }
 
+    private Gun DefaultGun = new Gun();
     
     
     

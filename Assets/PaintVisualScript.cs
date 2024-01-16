@@ -13,7 +13,10 @@ public class PaintVisualScript : MonoBehaviour
 
     private float CELL_SIZE;
 
-    private int gridValue;
+    [SerializeField] private int gridValue;
+
+
+    [SerializeField] private float repeatRate;
 
 
 
@@ -24,6 +27,7 @@ public class PaintVisualScript : MonoBehaviour
         CELL_SIZE = PaintGridSystem.Instance.GetCellSize();
         GRID_HEIGHT = (int)(PaintGridSystem.Instance.GetGridHeight() - 1);
         GRID_WIDTH = (int)(PaintGridSystem.Instance.GetGridWidth() - 1);
+        
 
     }
 
@@ -31,9 +35,9 @@ public class PaintVisualScript : MonoBehaviour
     {
         if(collision.tag == "FriendlyBullet")
         {
-            spriteRenderer.color = green;
             Debug.Log("collision");
             gameObject.layer = 7;
+            
         }
         
     }
@@ -134,6 +138,10 @@ public class PaintVisualScript : MonoBehaviour
     {
         switch(gridValue)
         {
+            //Nothing
+            case 0:
+                spriteRenderer.color = Color.white;
+                break;
             //5 combinations
             case 5:
                 spriteRenderer.sprite = paintSprites[0]; 
@@ -179,7 +187,7 @@ public class PaintVisualScript : MonoBehaviour
                 spriteRenderer.sprite = paintSprites[12];   
                 break;
             default:
-                spriteRenderer.color = Color.red;
+                spriteRenderer.sprite = null;
                 break;
 
 
