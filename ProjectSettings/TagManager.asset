@@ -7,6 +7,9 @@ TagManager:
   - Paint
   - Bullet
   - FriendlyBullet
+  - Enemy
+  - EnemyBullet
+  - BlobJoin
   layers:
   - Default
   - TransparentFX
@@ -18,9 +21,9 @@ TagManager:
   - PaintFriendly
   - PaintEnemy
   - BulletFriendly
-  - 
-  - 
-  - 
+  - Enemy
+  - Player
+  - BulletEnemy
   - 
   - 
   - 

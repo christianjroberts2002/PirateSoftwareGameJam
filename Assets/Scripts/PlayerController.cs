@@ -7,7 +7,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float playerSpeedX;
     [SerializeField] private float playerSpeedY;
 
-    [SerializeField] private bool rbMove;
+    [SerializeField] private float speedBonus;
+    [SerializeField] private float speedMultiplier;
+
 
     private Rigidbody2D playerRB;
 
@@ -18,18 +20,11 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if(!rbMove)
-        {
             MovePlayer();
-        }
     }
 
     private void LateUpdate()
     {
-        if(rbMove)
-        {
-            MovePlayerRigidBody();
-        }
          
     }
 
@@ -37,17 +32,19 @@ public class PlayerController : MonoBehaviour
     {
         float ySpeed = playerSpeedY * Input.GetAxis("Vertical");
         float xSpeed = playerSpeedY * Input.GetAxis("Horizontal");
-
+        float paintCoverage = PaintCoverageScript.Instance.GetPlayerPercentCovered();
+        speedBonus = speedMultiplier * (paintCoverage / 100) + 1;
+        
         //Up
         if (Input.GetAxis("Vertical") > 0)
         {
-            transform.position += Vector3.up * playerSpeedY * Time.deltaTime;
+            transform.position += Vector3.up * ySpeed * speedBonus * Time.deltaTime;
         }
 
         //Down
         if (Input.GetAxis("Vertical") < 0)
         {
-            transform.position += Vector3.down * playerSpeedY * Time.deltaTime;
+            transform.position += Vector3.down * -ySpeed * speedBonus * Time.deltaTime;
 
         }
 
@@ -55,45 +52,22 @@ public class PlayerController : MonoBehaviour
         //Right
         if (Input.GetAxis("Horizontal") > 0)
         {
-            transform.position += Vector3.right * playerSpeedX * Time.deltaTime;
+            transform.position += Vector3.right * xSpeed * speedBonus * Time.deltaTime;
 
         }
 
         //Left
         if (Input.GetAxis("Horizontal") < 0)
         {
-            transform.position += Vector3.left * playerSpeedX * Time.deltaTime;
+            transform.position += Vector3.left * -xSpeed * speedBonus * Time.deltaTime;
 
         }
 
     }
 
-    private void MovePlayerRigidBody()
+
+    public void SetSpeedMultiplier(float speedBonus)
     {
-        //Up
-        if (Input.GetKey(KeyCode.W))
-        {
-
-        }
-
-        //Down
-        if (Input.GetKey(KeyCode.W))
-        {
-
-        }
-
-
-        //Right
-        if (Input.GetKey(KeyCode.W))
-        {
-
-        }
-
-        //Left
-        if (Input.GetKey(KeyCode.W))
-        {
-
-        }
-
+        this.speedBonus = speedBonus;
     }
 }

@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class PaintVisualScript : MonoBehaviour
 {
-    private Color green;
     private SpriteRenderer spriteRenderer;
     [SerializeField] private Sprite[] paintSprites;
+    [SerializeField] private Sprite[] randomPaintSpotchSprites;
+    [SerializeField] private Sprite[] randomEnemyPaintSpotchSprites;
 
     [SerializeField] private int GRID_HEIGHT;
     [SerializeField] private int GRID_WIDTH;
@@ -20,38 +21,59 @@ public class PaintVisualScript : MonoBehaviour
 
 
 
+
+
+
     void Start()
     {
-        green = Color.green;
         spriteRenderer = GetComponent<SpriteRenderer>();
         CELL_SIZE = PaintGridSystem.Instance.GetCellSize();
         GRID_HEIGHT = (int)(PaintGridSystem.Instance.GetGridHeight() - 1);
         GRID_WIDTH = (int)(PaintGridSystem.Instance.GetGridWidth() - 1);
-        
+
+    }
+
+
+    private void Update()
+    {
+        //CheckGridNeighbors();
 
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag == "FriendlyBullet")
+        if (collision.tag == "FriendlyBullet")
         {
-            Debug.Log("collision");
+
             gameObject.layer = 7;
-            
+            AssignRandomPaintSpotch();
+
         }
-        
+
+        if (collision.tag == "Enemy" || collision.tag == "EnemyBullet")
+        {
+            gameObject.layer = 8;
+            AssignRandomEnemyPaintSpotch();
+        }
+
     }
 
-    private void Update()
-    {
-        CheckGridNeighbors();
-        SetPaintSprite();
 
+    private void AssignRandomPaintSpotch()
+    {
+        int randomSprite = Random.Range(0, randomPaintSpotchSprites.Length);
+        spriteRenderer.sprite = randomPaintSpotchSprites[randomSprite];
+    }
+
+    private void AssignRandomEnemyPaintSpotch()
+    {
+        int randomSprite = Random.Range(0, randomPaintSpotchSprites.Length);
+        spriteRenderer.sprite = randomEnemyPaintSpotchSprites[0];
     }
 
     private void CheckGridNeighbors()
     {
-        if(gameObject.layer == 8)
+        if (gameObject.layer == 8)
         {
             return;
         }
@@ -60,13 +82,14 @@ public class PaintVisualScript : MonoBehaviour
         PaintGridSystem.GridPosition thisGridPosition = PaintGridSystem.Instance.GetGridPosition(pos);
         int xPos = (int)thisGridPosition.x;
         int yPos = (int)thisGridPosition.y;
-        gridValue = 0;
 
         //Up
         if (yPos + 1 < GRID_HEIGHT)
         {
             if (PaintGridSystem.Instance.GetIsFriendlyPaint(xPos, yPos + 1))
-                gridValue += 5;
+            {
+
+            }
             //Right
             if (xPos + 1 < GRID_WIDTH)
             {
@@ -95,13 +118,15 @@ public class PaintVisualScript : MonoBehaviour
         if (yPos - 1 >= 0)
         {
             if (PaintGridSystem.Instance.GetIsFriendlyPaint(xPos, yPos - 1))
-                gridValue += 41;
+            {
+
+            }
             //Right
             if (xPos + 1 < GRID_WIDTH)
             {
                 if (PaintGridSystem.Instance.GetIsFriendlyPaint(xPos + 1, yPos - 1))
                 {
-                    //gridValue += 43;
+                    
                 }
 
             }
@@ -111,7 +136,8 @@ public class PaintVisualScript : MonoBehaviour
             {
                 if (PaintGridSystem.Instance.GetIsFriendlyPaint(xPos - 1, yPos - 1))
                 {
-                    //gridValue += 37;
+                    
+                    
                 }
 
             }
@@ -121,7 +147,10 @@ public class PaintVisualScript : MonoBehaviour
         if (xPos - 1 >= 0)
         {
             if (PaintGridSystem.Instance.GetIsFriendlyPaint(xPos - 1, yPos))
-                gridValue += 17;
+            {
+
+            }
+                
         }
 
 
@@ -129,70 +158,17 @@ public class PaintVisualScript : MonoBehaviour
         if (xPos + 1 < GRID_WIDTH)
         {
             if (PaintGridSystem.Instance.GetIsFriendlyPaint(xPos + 1, yPos))
-                gridValue += 23;
+            {
+
+            }
+                
         }
-        Debug.Log(gridValue);
+        
     }
 
     private void SetPaintSprite()
     {
-        switch(gridValue)
-        {
-            //Nothing
-            case 0:
-                spriteRenderer.color = Color.white;
-                break;
-            //5 combinations
-            case 5:
-                spriteRenderer.sprite = paintSprites[0]; 
-                break;
-            case 22:
-                spriteRenderer.sprite = paintSprites[1];
-                break;
-            case 28:
-                spriteRenderer.sprite = paintSprites[2];//needsSprite
-                break;
-            case 46:
-                spriteRenderer.sprite = paintSprites[3];
-                break;
-            case 45:
-                spriteRenderer.sprite = paintSprites[4];//NeedsSprite
-                break;
-                //All Together
-            case 86:
-                spriteRenderer.sprite = paintSprites[5];
-                break;
-            //17
-            case 17:
-                spriteRenderer.sprite = paintSprites[6];
-                break;
-            case 40:
-                spriteRenderer.sprite = paintSprites[7];//NeedsSprite 
-                break;
-            case 58:
-                spriteRenderer.sprite = paintSprites[8];
-                break;
-            case 81:
-                spriteRenderer.sprite = paintSprites[9];
-                break;
-            //23
-            case 23: 
-                spriteRenderer.sprite = paintSprites[10];
-                break;
-            case 64:
-                spriteRenderer.sprite = paintSprites[11];
-                break;
-            //41
-            case 41:
-                spriteRenderer.sprite = paintSprites[12];   
-                break;
-            default:
-                spriteRenderer.sprite = null;
-                break;
-
-
-
-        }
+       
     }
 
 }
