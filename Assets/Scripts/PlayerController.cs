@@ -10,12 +10,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float speedBonus;
     [SerializeField] private float speedMultiplier;
 
+    private Animator playerAnimator;
 
     private Rigidbody2D playerRB;
+
+    private bool isWalking;
 
     private void Start()
     {
         playerRB = GetComponent<Rigidbody2D>();
+        playerAnimator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -34,18 +38,19 @@ public class PlayerController : MonoBehaviour
         float xSpeed = playerSpeedY * Input.GetAxis("Horizontal");
         float paintCoverage = PaintCoverageScript.Instance.GetPlayerPercentCovered();
         speedBonus = speedMultiplier * (paintCoverage / 100) + 1;
-        
+        isWalking = false;
         //Up
         if (Input.GetAxis("Vertical") > 0)
         {
             transform.position += Vector3.up * ySpeed * speedBonus * Time.deltaTime;
+            isWalking = true;
         }
 
         //Down
         if (Input.GetAxis("Vertical") < 0)
         {
             transform.position += Vector3.down * -ySpeed * speedBonus * Time.deltaTime;
-
+            isWalking = true;
         }
 
 
@@ -53,16 +58,17 @@ public class PlayerController : MonoBehaviour
         if (Input.GetAxis("Horizontal") > 0)
         {
             transform.position += Vector3.right * xSpeed * speedBonus * Time.deltaTime;
-
+            isWalking = true;
         }
 
         //Left
         if (Input.GetAxis("Horizontal") < 0)
         {
             transform.position += Vector3.left * -xSpeed * speedBonus * Time.deltaTime;
-
+            isWalking = true;
         }
 
+        playerAnimator.SetBool("IsWalking", isWalking);
     }
 
 

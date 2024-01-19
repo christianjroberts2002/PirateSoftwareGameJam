@@ -4,20 +4,53 @@ using UnityEngine;
 
 public class PaintGun : MonoBehaviour, IGun
 {
+    //Default
+    GameObject defaultBulletPrefabGO;
+
+    private Transform[] defaultShootDirectionsList;
+
+    private float defaultBulletSpeed;
+
+    private float defaultBulletSize;
+
+    private float defaultBulletLife;
+
+    private float defaultShootingSpeed;
+
+    private SpriteRenderer defaultSpriteRenderer;
+
+
+    private bool defaultCanShoot;
+
+    private Sprite[] defaultGunSprites;
+
+    //Modified
     [SerializeField] GameObject bulletPrefabGO;
 
     [SerializeField] private Transform[] shootDirectionsList;
 
-    private SpriteRenderer spriteRenderer;
+    [SerializeField] private float bulletSpeed;
+
+    [SerializeField] private float bulletSize;
+
+    [SerializeField] private float bulletLife;
+
+    [SerializeField] private float shootingSpeed;
+
+    [SerializeField] private SpriteRenderer spriteRenderer;
 
 
-    private bool canShoot;
+    [SerializeField] private bool canShoot;
 
+    [SerializeField] private Sprite[] gunSprites;
+
+    [SerializeField] private float gunBoost;
+    [SerializeField] private float gunBoostMultiplier;
     private void OnEnable()
     {
         for(int i = 0; i < shootDirectionsList.Length; i++)
         {
-            shootDirections[i] = shootDirectionsList[i];
+            ShootDirections[i] = shootDirectionsList[i];
         }
     }
 
@@ -25,29 +58,43 @@ public class PaintGun : MonoBehaviour, IGun
     {
         canShoot = true;
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        defaultBulletPrefabGO = bulletPrefabGO;
+        defaultShootDirectionsList = shootDirectionsList;
+        defaultBulletSpeed = bulletSpeed;
+        defaultBulletSize = bulletSize;
+        defaultBulletLife = bulletLife;
+        defaultShootingSpeed = shootingSpeed;
+        defaultSpriteRenderer = spriteRenderer;
+        defaultCanShoot = canShoot;
+        defaultGunSprites = gunSprites;
     }
-    public Transform[] shootDirections
+    public Transform[] ShootDirections
     {
         get
         {
-            return new Transform[3];
+            return shootDirectionsList;
         }
-        set { shootDirections = value; }
+        set { shootDirectionsList = value; }
     }
 
-    public float bulletSpeed
+    public float BulletSpeed
     {
         get
         {
-            return 15f;
+            return bulletSpeed;
+        }
+        set
+        {
+            bulletSpeed = value;
         }
     }
 
-    public float bulletSize
+    public float BulletSize
     {
         get
         {
-            return 1f;
+            return bulletSize;
         }
         set
         {
@@ -55,11 +102,11 @@ public class PaintGun : MonoBehaviour, IGun
         }
     }
 
-    public float bulletLife
+    public float BulletLife
     {
         get
         {
-            return 1.5f;
+            return bulletLife;
         }
         set
         {
@@ -67,11 +114,11 @@ public class PaintGun : MonoBehaviour, IGun
         }
     }
 
-    public float shootingSpeed
+    public float ShootingSpeed
     {
         get
         {
-            return .5f;
+            return shootingSpeed;
         }
         set
         {
@@ -79,7 +126,7 @@ public class PaintGun : MonoBehaviour, IGun
         }
     }
 
-    public GameObject bulletPrefab
+    public GameObject BulletPrefab
     {
         get
         {
@@ -87,11 +134,11 @@ public class PaintGun : MonoBehaviour, IGun
         }
         set
         {
-            bulletPrefab = value;
+            bulletPrefabGO = value;
         }
     }
 
-    bool IGun.canShoot 
+    bool IGun.CanShoot 
     {
         get
         {
@@ -104,6 +151,42 @@ public class PaintGun : MonoBehaviour, IGun
         }
      }
 
+    public Sprite[] GunSprites
+    {
+        get
+        {
+            return gunSprites;
+        }
+        set
+        {
+            gunSprites = value;
+        }
+    }
+
+    public float GunBoost
+    {
+        get
+        {
+            return gunBoost;
+        }
+        set
+        {
+            gunBoost = value;
+        }
+    }
+
+    public float GunBoostMultiplier
+    {
+        get
+        {
+            return gunBoostMultiplier;
+        }
+        set
+        {
+            gunBoostMultiplier = value;
+        }
+    }
+
     public void ShootGun()
     {
         if (canShoot)
@@ -111,13 +194,14 @@ public class PaintGun : MonoBehaviour, IGun
             canShoot = false;
             foreach (Transform t in shootDirectionsList)
             {
-                GameObject newBullet = Instantiate(bulletPrefab, t.position, t.transform.rotation);
+                SetGunBoosts();
+                GameObject newBullet = Instantiate(BulletPrefab, t.position, t.transform.rotation);
                 BulletMovement bulletMovement = newBullet.GetComponent<BulletMovement>();
-                bulletMovement.SetBulletSpeed(bulletSpeed);
-                Destroy(newBullet, bulletLife);
+                
+                Destroy(newBullet, BulletLife);
             }
 
-            StartCoroutine(WaitForShootingSpeed(shootingSpeed));
+            StartCoroutine(WaitForShootingSpeed(ShootingSpeed));
 
         }
 
@@ -140,8 +224,43 @@ public class PaintGun : MonoBehaviour, IGun
         spriteRenderer.sortingOrder = layer;
     }
 
-    public void SetBulletSpeed(float bulletSpeed)
+    public void SetSpriteInSpriteRenderer(Sprite sprite)
     {
-        
+        spriteRenderer.sprite = sprite;
     }
+
+    public SpriteRenderer GetSpriteRenderer()
+    {
+        return spriteRenderer;
+    }
+
+    public void SetGunBoosts()
+    {
+        //BoostMultiplier
+        float paintCoverage = PaintCoverageScript.Instance.GetPlayerPercentCovered() / 100;
+        gunBoost = (paintCoverage * gunBoostMultiplier) + 1;
+        //////////
+        //////////
+
+        //ShootDirection -- stretch goal
+
+        //bulletSpeed
+        float newbulletSpeed = defaultBulletSpeed * gunBoost;
+        this.bulletSpeed = newbulletSpeed;
+
+        //bulletSize
+        float newBulletSize = defaultBulletSize * gunBoost;
+        this.bulletSize = newBulletSize;
+        bulletPrefabGO.transform.localScale = Vector3.one * this.bulletSize;
+
+        //bulletLife
+        float newBulletLife = defaultBulletLife * gunBoost;
+        this.bulletLife = newBulletLife;
+
+
+        //ShootingSpeed
+        //float newShootingSpeed = defaultShootingSpeed / gunBoost;
+        //shootingSpeed = newShootingSpeed;
+    }
+
 }

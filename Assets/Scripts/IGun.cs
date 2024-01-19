@@ -5,15 +5,20 @@ using static PlayerGun;
 
 public interface IGun
 {
-    GameObject bulletPrefab { get; set; }
-    Transform[] shootDirections { get; set; }
-    float bulletSpeed { get;}
-    float bulletSize { get; set; }
-    float bulletLife { get; set; }
-    float shootingSpeed { get; set; }
+    GameObject BulletPrefab { get; set; }
+    Transform[] ShootDirections { get; set; }
+    float BulletSpeed { get; set; }
+    float BulletSize { get; set; }
+    float BulletLife { get; set; }
+    float ShootingSpeed { get; set; }
+
+    Sprite[] GunSprites { get; set; }
 
 
-    bool canShoot { get; set; }
+    bool CanShoot { get; set; }
+
+    float GunBoost { get; set; }
+    float GunBoostMultiplier { get; set; }
 
     void ShootGun();
 
@@ -22,7 +27,12 @@ public interface IGun
     IEnumerator WaitForShootingSpeed(float shootingSpeed);
 
     void SetSpriteOrderInLayer(int layer);
+    void SetSpriteInSpriteRenderer(Sprite sprite);
 
-    void SetBulletSpeed(float speed);
+    SpriteRenderer GetSpriteRenderer();
+
+    void SetGunBoosts();
+
+
 
 }

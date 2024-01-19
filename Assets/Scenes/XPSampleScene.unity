@@ -204,11 +204,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 32f764e4590f64f4fb2b027258178b89, type: 3}
---- !u!4 &35044961 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5692898305499343032, guid: 590aa333109054b41856d2aecdf5531b, type: 3}
-  m_PrefabInstance: {fileID: 8568331752993552159}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &39369169 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1915206774590257544, guid: 32f764e4590f64f4fb2b027258178b89, type: 3}
@@ -684,6 +679,7 @@ GameObject:
   m_Component:
   - component: {fileID: 633281107}
   - component: {fileID: 633281106}
+  - component: {fileID: 633281108}
   m_Layer: 0
   m_Name: Square
   m_TagString: Untagged
@@ -758,6 +754,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &633281108
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 633281105}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 87931e4149ab75340b879a3c8813025b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &656224362
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1661,10 +1678,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 307275712613819803, guid: 590aa333109054b41856d2aecdf5531b, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.507
-      objectReference: {fileID: 0}
     - target: {fileID: 1064388232580598209, guid: 590aa333109054b41856d2aecdf5531b, type: 3}
       propertyPath: currentGunGO
       value: 
@@ -1677,25 +1690,49 @@ PrefabInstance:
       propertyPath: guns.Array.data[1]
       value: 
       objectReference: {fileID: 1467427060}
-    - target: {fileID: 1064388232580598209, guid: 590aa333109054b41856d2aecdf5531b, type: 3}
-      propertyPath: paintCoverageMultiplier
+    - target: {fileID: 1173700898050358514, guid: 590aa333109054b41856d2aecdf5531b, type: 3}
+      propertyPath: bulletLife
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1173700898050358514, guid: 590aa333109054b41856d2aecdf5531b, type: 3}
+      propertyPath: bulletSize
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1173700898050358514, guid: 590aa333109054b41856d2aecdf5531b, type: 3}
-      propertyPath: bulletSpawnPoint
-      value: 
-      objectReference: {fileID: 35044961}
-    - target: {fileID: 3212969810032337513, guid: 590aa333109054b41856d2aecdf5531b, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.52699953
+      propertyPath: bulletSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1173700898050358514, guid: 590aa333109054b41856d2aecdf5531b, type: 3}
+      propertyPath: shootingSpeed
+      value: 0.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1173700898050358514, guid: 590aa333109054b41856d2aecdf5531b, type: 3}
+      propertyPath: gunBoostMultiplier
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3660399884548055132, guid: 590aa333109054b41856d2aecdf5531b, type: 3}
       propertyPath: m_Name
       value: PlayerParent
       objectReference: {fileID: 0}
-    - target: {fileID: 4959082457834656204, guid: 590aa333109054b41856d2aecdf5531b, type: 3}
-      propertyPath: m_SortingOrder
-      value: 5
+    - target: {fileID: 4197572689792641457, guid: 590aa333109054b41856d2aecdf5531b, type: 3}
+      propertyPath: bulletLife
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4197572689792641457, guid: 590aa333109054b41856d2aecdf5531b, type: 3}
+      propertyPath: bulletSize
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4197572689792641457, guid: 590aa333109054b41856d2aecdf5531b, type: 3}
+      propertyPath: bulletSpeed
+      value: 2.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 4197572689792641457, guid: 590aa333109054b41856d2aecdf5531b, type: 3}
+      propertyPath: shootingSpeed
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4197572689792641457, guid: 590aa333109054b41856d2aecdf5531b, type: 3}
+      propertyPath: gunBoostMultiplier
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6169628050767281027, guid: 590aa333109054b41856d2aecdf5531b, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1707,40 +1744,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6540291550865328977, guid: 590aa333109054b41856d2aecdf5531b, type: 3}
       propertyPath: playerSpeedX
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6540291550865328977, guid: 590aa333109054b41856d2aecdf5531b, type: 3}
       propertyPath: playerSpeedY
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6540291550865328977, guid: 590aa333109054b41856d2aecdf5531b, type: 3}
       propertyPath: speedMultiplier
-      value: 0.75
+      value: 0.38
       objectReference: {fileID: 0}
     - target: {fileID: 6605975677237568443, guid: 590aa333109054b41856d2aecdf5531b, type: 3}
       propertyPath: rightVisual
       value: 
       objectReference: {fileID: 972229322}
-    - target: {fileID: 6605975677237568443, guid: 590aa333109054b41856d2aecdf5531b, type: 3}
-      propertyPath: playerSprites.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6605975677237568443, guid: 590aa333109054b41856d2aecdf5531b, type: 3}
-      propertyPath: playerSprites.Array.data[0]
-      value: 
-      objectReference: {fileID: 21300000, guid: 1d45b18a781b2f844987ab1b60b80c65, type: 3}
-    - target: {fileID: 6605975677237568443, guid: 590aa333109054b41856d2aecdf5531b, type: 3}
-      propertyPath: playerSprites.Array.data[1]
-      value: 
-      objectReference: {fileID: 21300000, guid: 1b205e99df0bec546b8c90280f3d9d79, type: 3}
-    - target: {fileID: 6605975677237568443, guid: 590aa333109054b41856d2aecdf5531b, type: 3}
-      propertyPath: playerSprites.Array.data[2]
-      value: 
-      objectReference: {fileID: 21300000, guid: e8ab29360785c38458cd73c8a5b912de, type: 3}
-    - target: {fileID: 6605975677237568443, guid: 590aa333109054b41856d2aecdf5531b, type: 3}
-      propertyPath: playerSprites.Array.data[3]
-      value: 
-      objectReference: {fileID: 21300000, guid: 9967b95e6103eea4d99aca44c3aa1a6c, type: 3}
     - target: {fileID: 7107924332732496100, guid: 590aa333109054b41856d2aecdf5531b, type: 3}
       propertyPath: m_RootOrder
       value: 0

@@ -9,6 +9,12 @@ public class PlayerGunVisual : MonoBehaviour
     private int layerBelowGun = 0;
 
 
+
+    [SerializeField] SpriteRenderer playerGunSpriteRenderer;
+    [SerializeField] Sprite currentGunPlayerSprite;
+
+    private bool isLookingUp;
+
     private void Start()
     {
         
@@ -24,7 +30,10 @@ public class PlayerGunVisual : MonoBehaviour
         transform.right = lookDir;
 
         SetGunLayer();
-        
+
+        SetGunVisualBasedOnMouseAngle();
+
+
     }
 
     private void SetGunLayer()
@@ -40,6 +49,52 @@ public class PlayerGunVisual : MonoBehaviour
             currentGun.SetSpriteOrderInLayer(layerAboveGun);
         }
         
+
+    }
+
+    private void SetGunVisualBasedOnMouseAngle()
+    {
+        IGun currentGun = PlayerGun.Instance.GetCurrentGun();
+        float inputAngle = PlayerVisual.Instance.GetPlayerToCharacterAngle();
+        isLookingUp = false;
+        SpriteRenderer spriteRenderer = currentGun.GetSpriteRenderer();
+        //UP
+        if (inputAngle > 315 || inputAngle < 45)
+        {
+            currentGunPlayerSprite = currentGun.GunSprites[0];
+            isLookingUp = true;
+
+        }
+        //Down
+        else if (inputAngle < 225 && inputAngle > 135)
+        {
+            currentGunPlayerSprite = currentGun.GunSprites[1];
+
+        }
+        //Left
+        else if (inputAngle >= 225 && inputAngle <= 315)
+        {
+            currentGunPlayerSprite = currentGun.GunSprites[2];
+            
+        }
+        //Right
+        else if (inputAngle >= 45 && inputAngle <= 135)
+        {
+            currentGunPlayerSprite = currentGun.GunSprites[3];
+            
+
+        }
+
+        if(inputAngle < 180)
+        {
+            spriteRenderer.flipY = false ;
+        }
+        else
+        {
+            spriteRenderer.flipY = true;
+        }
+
+        currentGun.SetSpriteInSpriteRenderer(currentGunPlayerSprite);
 
     }
 }

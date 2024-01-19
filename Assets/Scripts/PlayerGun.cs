@@ -44,7 +44,6 @@ public class PlayerGun : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        SetGunSettings(currentGun);
         ShootGun();
 
         if (Input.GetKeyDown(KeyCode.T))
@@ -67,16 +66,7 @@ public class PlayerGun : MonoBehaviour
         }
     }
 
-    private void SetGunSettings(IGun gun)
-    {
-        float paintCoverage = (PaintCoverageScript.Instance.GetPlayerPercentCovered() / 100) + 1;
-        float paintCoverageBoost = paintCoverage * paintCoverageMultiplier;
-        float newBulletSpeed = 1 * paintCoverageBoost;
-        gun.SetBulletSpeed(newBulletSpeed);
-    }
-
-
-
+    
     private void ShootGun()
     {
         if (Input.GetMouseButton(0))

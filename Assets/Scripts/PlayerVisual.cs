@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
@@ -8,6 +9,8 @@ public class PlayerVisual : MonoBehaviour
 {
     Vector3 mousePos;
 
+    private float angleCFloat;
+
     [SerializeField] private GameObject rightVisual;
 
     [SerializeField] private Sprite[] playerSprites;
@@ -15,7 +18,7 @@ public class PlayerVisual : MonoBehaviour
     [SerializeField] SpriteRenderer playerSpriteRenderer;
     [SerializeField] Sprite currentPlayerSprite;
 
-
+    private Animator playerAnimator;
 
     private bool isLookingUp;
 
@@ -35,6 +38,7 @@ public class PlayerVisual : MonoBehaviour
 
     void Start()
     {
+        playerAnimator = GetComponent<Animator>();
         playerSpriteRenderer = GetComponent<SpriteRenderer>(); 
         currentPlayerSprite = playerSprites[0];
         
@@ -68,7 +72,7 @@ public class PlayerVisual : MonoBehaviour
 
 
         float cosC = (Mathf.Pow(sideA, 2) + Mathf.Pow(sideB, 2) - Mathf.Pow(sideC, 2)) / (2 * sideA * sideB);
-        float angleCFloat = Mathf.Acos(cosC) * 180 / Mathf.PI;
+        angleCFloat = Mathf.Acos(cosC) * 180 / Mathf.PI;
         //Debug.Log(angleCFloat);
 
 
@@ -90,33 +94,39 @@ public class PlayerVisual : MonoBehaviour
     {
         IGun currentGun = PlayerGun.Instance.GetCurrentGun();
         float inputAngle = GetAngleFromProjectionTriangle();
+        int directionInt = 0;
         isLookingUp = false;
         //UP
         if (inputAngle > 315 || inputAngle < 45)
         {
-            currentPlayerSprite = playerSprites[0];
+            directionInt = 0;
+            currentPlayerSprite = playerSprites[directionInt];
             isLookingUp = true;
 
         }
         //Down
         else if (inputAngle < 225 && inputAngle > 135)
         {
-            currentPlayerSprite = playerSprites[1];
+            directionInt = 1;
+            currentPlayerSprite = playerSprites[directionInt];
             
 
         }
         //Left
         else if (inputAngle >= 225 && inputAngle <= 315)
         {
-            currentPlayerSprite = playerSprites[2];
+            directionInt = 2;
+            currentPlayerSprite = playerSprites[directionInt];
         }
         //Right
         else if (inputAngle >= 45 && inputAngle <= 135)
         {
-            currentPlayerSprite = playerSprites[3];
+            directionInt = 3;
+            currentPlayerSprite = playerSprites[directionInt];
            
         }
 
+        playerAnimator.SetInteger("WalkingDirection", directionInt);
         playerSpriteRenderer.sprite = currentPlayerSprite;
 
     }
@@ -124,6 +134,11 @@ public class PlayerVisual : MonoBehaviour
     public bool GetIsLookingUp()
     {
         return isLookingUp;
+    }
+
+    public float GetPlayerToCharacterAngle()
+    {
+        return angleCFloat;
     }
 
     
