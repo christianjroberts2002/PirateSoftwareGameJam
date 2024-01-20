@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class PaintVisualScript : MonoBehaviour
@@ -46,13 +48,41 @@ public class PaintVisualScript : MonoBehaviour
         {
 
             gameObject.layer = 7;
+            
+            
             AssignRandomPaintSpotch();
 
         }
 
         if (collision.tag == "Enemy" || collision.tag == "EnemyBullet")
         {
+            if(gameObject.layer == 7)
+            {
+                Debug.Log("hit");
+                EnemyHealthScript enemyHealthScript = collision.GetComponent<EnemyHealthScript>();
+                float enemyHealth = enemyHealthScript.GetEnemyHealth();
+                enemyHealthScript.TakeDamager(enemyHealth, 1f);
+                enemyHealthScript.SetSliderValue(enemyHealth);
+
+                //EnemySpeed
+                EnemyScript enemyScript = collision.GetComponent<EnemyScript>();
+                float enemySpeed = enemyScript.GetEnemySpeed();
+
+                float enemyPaintCollisionSlowdown = enemyHealthScript.GetEnemyPaintSlowdown();
+                if (enemySpeed > 0 + enemyPaintCollisionSlowdown)
+                {
+                    float newEnemySpeed = enemySpeed * enemyPaintCollisionSlowdown;
+                    enemyScript.SetEnemySpeed(newEnemySpeed);
+                }
+                if (enemyHealth <= 0)
+                {
+                    Destroy(collision.gameObject);
+                }
+            }
+
             gameObject.layer = 8;
+            
+            
             AssignRandomEnemyPaintSpotch();
         }
 
@@ -61,13 +91,13 @@ public class PaintVisualScript : MonoBehaviour
 
     private void AssignRandomPaintSpotch()
     {
-        int randomSprite = Random.Range(0, randomPaintSpotchSprites.Length);
+        int randomSprite = UnityEngine.Random.Range(0, randomPaintSpotchSprites.Length);
         spriteRenderer.sprite = randomPaintSpotchSprites[randomSprite];
     }
 
     private void AssignRandomEnemyPaintSpotch()
     {
-        int randomSprite = Random.Range(0, randomPaintSpotchSprites.Length);
+        int randomSprite = UnityEngine.Random.Range(0, randomPaintSpotchSprites.Length);
         spriteRenderer.sprite = randomEnemyPaintSpotchSprites[0];
     }
 

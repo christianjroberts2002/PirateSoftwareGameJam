@@ -11,7 +11,6 @@ public class PlayerVisual : MonoBehaviour
 
     private float angleCFloat;
 
-    [SerializeField] private GameObject rightVisual;
 
     [SerializeField] private Sprite[] playerSprites;
 
@@ -61,7 +60,6 @@ public class PlayerVisual : MonoBehaviour
 
 
         Vector2 rightTriangleVector = transform.position + Vector3.up;
-        rightVisual.transform.position = rightTriangleVector;
         float distancefromRighttoMouse = Vector3.Distance(rightTriangleVector, mouseDir);
 
         float sideA = Vector2.Distance(transform.position, rightTriangleVector);
@@ -85,7 +83,6 @@ public class PlayerVisual : MonoBehaviour
             angleCFloat = 180 + (Mathf.Abs(180 - angleCFloat));
         }
 
-        Debug.Log(angleCFloat);
         return angleCFloat;
 
     }

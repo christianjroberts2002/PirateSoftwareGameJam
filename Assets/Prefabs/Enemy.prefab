@@ -12,8 +12,6 @@ GameObject:
   - component: {fileID: 646619716126739201}
   - component: {fileID: 7529969199790682228}
   - component: {fileID: 2225815466455558684}
-  - component: {fileID: 1197248920881176676}
-  - component: {fileID: 1499193296526957095}
   - component: {fileID: 8082758833057090963}
   - component: {fileID: 6379156182901395023}
   m_Layer: 10
@@ -37,7 +35,7 @@ Transform:
   m_Children:
   - {fileID: 2461391586906454376}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &646619716126739201
 SpriteRenderer:
@@ -103,8 +101,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9eca847782adbd49b0d6ccff688698a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemySpeed: 3
+  maxRandomEnemySpeed: 7
+  enemySpeed: 0
+  minRandomEnemySpeed: 2
+  maxEnemySpeed: 0
+  enemySpeedIncrease: 0.25
   rbMovement: 1
+  friendlyPaint:
+    serializedVersion: 2
+    m_Bits: 0
+  enemyPaint:
+    serializedVersion: 2
+    m_Bits: 0
+  onFootTile: 0
 --- !u!50 &2225815466455558684
 Rigidbody2D:
   serializedVersion: 4
@@ -132,63 +141,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &1197248920881176676
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1329650539186815527}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a79231ae3925bc44ea68d2f5d4d16ef4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!61 &1499193296526957095
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1329650539186815527}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2, y: 2}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.75, y: 1.75}
-  m_EdgeRadius: 0
 --- !u!61 &8082758833057090963
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -247,7 +199,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthSlider: {fileID: 878640444552943315}
-  enemyHealth: 20
+  enemyHealth: 75
+  enemyBulletSlowdown: 0.2
+  enemyPaintCollisionSlowdown: 0.1
+  enemyScript: {fileID: 7529969199790682228}
 --- !u!1 &1788765160365040005
 GameObject:
   m_ObjectHideFlags: 0

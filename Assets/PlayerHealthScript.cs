@@ -18,7 +18,7 @@ public class PlayerHealthScript : MonoBehaviour
     {
         if (collision.tag == "Enemy")
         {
-            float enemyKnockback = 35f;
+            float enemyKnockback = 43f;
             Rigidbody2D enemyRB = collision.GetComponent<Rigidbody2D>();
             Vector2 playerPosition = new Vector2(transform.position.x, transform.position.y);
             Vector2 enemyDirection = playerPosition - enemyRB.position;
