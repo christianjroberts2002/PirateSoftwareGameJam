@@ -46,20 +46,20 @@ public class CameraManagerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        playerTransform = PlayerController.Instance.GetPlayerTransform();
-        playerPosition = playerTransform.position;
-        if (playerPosition.x < maxCameraX)
-        {
-            virtualCameraTransposer.m_TrackedObjectOffset.x = maxCameraX- virtualCamera.transform.position.x;
-            virtualCameraTransposer.m_DeadZoneWidth = 2f;
-            virtualCameraTransposer.m_SoftZoneWidth = 2f;
+        //playerTransform = PlayerController.Instance.GetPlayerTransform();
+        //playerPosition = playerTransform.position;
+        //if (virtualCameraTransposer.gameObject.transform.position.x < maxCameraX)
+        //{
+        //    virtualCameraTransposer.m_DeadZoneWidth = 2f;
+        //    virtualCameraTransposer.m_SoftZoneWidth = 2f;
 
-        }
-        else
-        {
-            virtualCameraTransposer.m_DeadZoneWidth = .2f;
-            virtualCameraTransposer.m_SoftZoneWidth = .8f;
-        }
+
+        //}
+        //else
+        //{
+        //    virtualCameraTransposer.m_DeadZoneWidth = .2f;
+        //    virtualCameraTransposer.m_SoftZoneWidth = .8f;
+        //}
         
     }
 }
