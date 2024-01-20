@@ -54,6 +54,7 @@ public class PlayerVisual : MonoBehaviour
     {
         mousePos = Input.mousePosition;
         mousePos = Camera.main.ScreenToWorldPoint(mousePos);
+        
         Vector3 mouseDir = (transform.position - mousePos);
 
         //Debug.Log(mouseDir);

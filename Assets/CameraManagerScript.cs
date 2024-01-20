@@ -7,59 +7,41 @@ using UnityEngine;
 public class CameraManagerScript : MonoBehaviour
 {
 
-    [SerializeField] private CinemachineVirtualCamera lowerLeft;
-    [SerializeField] private CinemachineVirtualCamera lowerRight;
-    [SerializeField] private CinemachineVirtualCamera upperLeft;
-    [SerializeField] private CinemachineVirtualCamera upperRight;
-
-    [SerializeField] private CinemachineVirtualCamera virtualCamera;
-
-    [SerializeField] private CinemachineFramingTransposer virtualCameraTransposer;
-
-
     [SerializeField] private float maxCameraX;
     [SerializeField] private float maxCameraY;
 
 
     private float gridSize;
+    private float cellSize;
 
-    private Vector3 playerPosition;
-    private Transform playerTransform;
+    private PolygonCollider2D polygonCollider;
+
     // Start is called before the first frame update
-    void Start()
-    {
-        virtualCameraTransposer = virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
-
-        float screenXResolution = Screen.width;
-        float screenYResolution = Screen.height;
-
-        gridSize = PaintGridSystem.Instance.GetGridHeight();
-        maxCameraX = screenXResolution / gridSize;
-        maxCameraY = screenYResolution / gridSize;
-
-        lowerLeft.transform.position = new Vector3(maxCameraX, maxCameraY);
-        lowerRight.transform.position = new Vector3(gridSize - maxCameraX, maxCameraY);
-        upperLeft.transform.position = new Vector3(maxCameraX, gridSize - maxCameraY);
-        upperRight.transform.position = new Vector3(gridSize - maxCameraX, gridSize - maxCameraY);
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        //playerTransform = PlayerController.Instance.GetPlayerTransform();
-        //playerPosition = playerTransform.position;
-        //if (virtualCameraTransposer.gameObject.transform.position.x < maxCameraX)
-        //{
-        //    virtualCameraTransposer.m_DeadZoneWidth = 2f;
-        //    virtualCameraTransposer.m_SoftZoneWidth = 2f;
+        //float screenXResolution = Screen.width;
+        //float screenYResolution = Screen.height;
+
+        
+        //cellSize = PaintGridSystem.Instance.GetCellSize();
+        //gridSize = PaintGridSystem.Instance.GetGridHeight();
+        //maxCameraX = screenXResolution/(gridSize);
+        //maxCameraY = screenYResolution/(gridSize);
 
 
-        //}
-        //else
+        //polygonCollider = GetComponent<PolygonCollider2D>();
+
+        //Vector2[] polygonPoints = new Vector2[]
         //{
-        //    virtualCameraTransposer.m_DeadZoneWidth = .2f;
-        //    virtualCameraTransposer.m_SoftZoneWidth = .8f;
-        //}
+        //    new Vector2(gridSize - maxCameraX, maxCameraY), //BottomRight
+        //    new Vector2(gridSize - maxCameraX, gridSize - maxCameraY), //TopRight
+        //    new Vector2(maxCameraX, gridSize - maxCameraY), //TopLeft
+        //    new Vector2(maxCameraX, maxCameraY)//BottomLeft
+        //};
+
+        //polygonCollider.points = polygonPoints;
+
         
     }
+
 }
