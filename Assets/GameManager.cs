@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance;
 
+    private int gameLevel;
+
     public void Awake()
     {
         if(Instance == null)
@@ -30,6 +32,16 @@ public class GameManager : MonoBehaviour
     {
        
         SceneManager.LoadScene(1);
+    }
+
+    public int GetGameLevel()
+    {
+        return gameLevel;
+    }
+
+    public void SetGameLever(int gameLevel)
+    {
+        this.gameLevel = gameLevel; 
     }
 
 }

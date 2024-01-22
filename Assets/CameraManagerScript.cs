@@ -17,31 +17,29 @@ public class CameraManagerScript : MonoBehaviour
     private PolygonCollider2D polygonCollider;
 
     // Start is called before the first frame update
-    void Update()
+    private void Start()
     {
-        //float screenXResolution = Screen.width;
-        //float screenYResolution = Screen.height;
-
-        
-        //cellSize = PaintGridSystem.Instance.GetCellSize();
-        //gridSize = PaintGridSystem.Instance.GetGridHeight();
-        //maxCameraX = screenXResolution/(gridSize);
-        //maxCameraY = screenYResolution/(gridSize);
+        float screenXResolution = Screen.width;
+        float screenYResolution = Screen.height;
 
 
-        //polygonCollider = GetComponent<PolygonCollider2D>();
+        cellSize = PaintGridSystem.Instance.GetCellSize();
+        gridSize = PaintGridSystem.Instance.GetGridHeight();
+        maxCameraX = screenXResolution / (gridSize);
+        maxCameraY = screenYResolution / (gridSize);
 
-        //Vector2[] polygonPoints = new Vector2[]
-        //{
-        //    new Vector2(gridSize - maxCameraX, maxCameraY), //BottomRight
-        //    new Vector2(gridSize - maxCameraX, gridSize - maxCameraY), //TopRight
-        //    new Vector2(maxCameraX, gridSize - maxCameraY), //TopLeft
-        //    new Vector2(maxCameraX, maxCameraY)//BottomLeft
-        //};
 
-        //polygonCollider.points = polygonPoints;
+        polygonCollider = GetComponent<PolygonCollider2D>();
 
-        
+        Vector2[] polygonPoints = new Vector2[]
+        {
+            new Vector2(gridSize, 0), //BottomRight
+            new Vector2(gridSize, gridSize), //TopRight
+            new Vector2(0, gridSize), //TopLeft
+            new Vector2(0, 0)//BottomLeft
+        };
+
+        polygonCollider.points = polygonPoints;
     }
 
 }

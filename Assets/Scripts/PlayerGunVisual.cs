@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,8 +18,9 @@ public class PlayerGunVisual : MonoBehaviour
 
     private void Start()
     {
-        
+
     }
+
 
     private void Update()
     {
@@ -33,6 +35,7 @@ public class PlayerGunVisual : MonoBehaviour
 
         SetGunVisualBasedOnMouseAngle();
 
+        
 
     }
 
@@ -97,4 +100,6 @@ public class PlayerGunVisual : MonoBehaviour
         currentGun.SetSpriteInSpriteRenderer(currentGunPlayerSprite);
 
     }
+    
+
 }

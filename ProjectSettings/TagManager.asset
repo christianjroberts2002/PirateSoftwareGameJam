@@ -10,6 +10,7 @@ TagManager:
   - Enemy
   - EnemyBullet
   - BlobJoin
+  - Obstacle
   layers:
   - Default
   - TransparentFX
@@ -25,7 +26,7 @@ TagManager:
   - Player
   - BulletEnemy
   - Neutral
-  - 
+  - Obstacle
   - 
   - 
   - 

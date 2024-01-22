@@ -7,6 +7,7 @@ using UnityEngine;
 public class PaintGridSystem : MonoBehaviour
 {
     //Needs to be all positive numbers
+    [SerializeField] private LayerMask obstacleLayer;
 
     [SerializeField] GameObject gridSystemVisualPrefab;
 
@@ -29,7 +30,10 @@ public class PaintGridSystem : MonoBehaviour
     {
         public float x, y;
         public GameObject gameObject;
+        public bool isObstacle;
     }
+
+    public bool isAnObstacle;
 
     public GridPosition[,] gridPositions;
     public int gridPositionsInt = 0;
@@ -53,7 +57,10 @@ public class PaintGridSystem : MonoBehaviour
 
     private void Start()
     {
+        
     }
+
+    
 
     private void CreateGrid()
     {
@@ -62,13 +69,28 @@ public class PaintGridSystem : MonoBehaviour
             for (int y = 0; y < GRID_WIDTH; y++)
             {
                 
+                
                 float xPos = CELL_HEIGHT * x + startingPos.x;
                 float yPos = CELL_HEIGHT * y + startingPos.y;
-                Vector3 cellPosition = new Vector3(xPos, yPos, 0);
+
+                
+
+                    Vector3 cellPosition = new Vector3(xPos, yPos, 0);
                 GameObject newCell = Instantiate(gridSystemVisualPrefab, cellPosition, Quaternion.identity);
                 gridPositions[x,y].x = x;
                 gridPositions[x,y].y = y;
                 gridPositions[x,y].gameObject = newCell;
+
+                Vector2 rayOrigin = new Vector2(xPos, yPos);
+                Vector2 rayDirection = Vector2.up * .12f;
+
+                if (Physics2D.Raycast(rayOrigin, rayDirection, .12f, obstacleLayer))
+                {
+                    Debug.Log("obstacle");
+                    gridPositions[x, y].isObstacle = true;
+                    gridPositions[x, y].gameObject.layer = 14;
+                    gridPositions[x, y].gameObject.tag = "Obstacle";
+                }
                 gridPositionsInt++;
 
             }
@@ -83,7 +105,21 @@ public class PaintGridSystem : MonoBehaviour
 
     public bool GetIsFriendlyPaint(int x, int y)
     {
+
         if(gridPositions[x,y].gameObject.layer == 7)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public bool GetIsObstacle(int x, int y)
+    {
+
+        if (gridPositions[x, y].isObstacle)
         {
             return true;
         }

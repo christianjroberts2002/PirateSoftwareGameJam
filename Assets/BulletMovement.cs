@@ -22,4 +22,12 @@ public class BulletMovement : MonoBehaviour
     {
         this.bulletSpeed = bulletSpeed;
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Obstacle")
+        {
+            Destroy(gameObject);
+        }
+    }
 }

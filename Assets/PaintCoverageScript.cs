@@ -10,6 +10,7 @@ public class PaintCoverageScript : MonoBehaviour
     private int GRID_HEIGHT;
     private int GRID_WIDTH;
     private int GRID_SIZE;
+    private float CELL_SIZE;
 
     [SerializeField] private float friendlyTiles;
     [SerializeField] private float enemyTiles;
@@ -35,6 +36,7 @@ public class PaintCoverageScript : MonoBehaviour
         GRID_HEIGHT = PaintGridSystem.Instance.GetGridHeight();
         GRID_WIDTH = PaintGridSystem.Instance.GetGridWidth();
         GRID_SIZE = GRID_WIDTH * GRID_HEIGHT;
+        CELL_SIZE = PaintGridSystem.Instance.GetCellSize();
     }
 
     // Update is called once per frame
@@ -56,6 +58,11 @@ public class PaintCoverageScript : MonoBehaviour
         {
             for (int y = 0; y < GRID_HEIGHT; y++)
             {
+                if (PaintGridSystem.Instance.GetIsObstacle(x,y) == true)
+                {
+                    return;
+                }
+
                 if (PaintGridSystem.Instance.GetIsFriendlyPaint(x, y))
                 {
                     friendlyTiles++;

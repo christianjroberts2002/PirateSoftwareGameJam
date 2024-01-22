@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        startingPosition = gameObject.transform.position;
+        
         playerRB = GetComponent<Rigidbody2D>();
         playerAnimator = GetComponent<Animator>();
         DontDestroyOnLoad(gameObject);
@@ -65,6 +65,8 @@ public class PlayerController : MonoBehaviour
         cellSize = PaintGridSystem.Instance.GetCellSize();
         gridSize = PaintGridSystem.Instance.GetGridHeight();
 
+        startingPosition = new Vector3((gridSize / cellSize) / 2, (gridSize / cellSize) / 2);
+        transform.position = startingPosition;
         maxXPosition = (cellSize * gridSize);
         maxYPosition = (cellSize * gridSize);
     }
@@ -72,7 +74,7 @@ public class PlayerController : MonoBehaviour
     private void OnLevelWasLoaded(int level)
     {
         //Put him in the center
-        transform.position = new Vector3((gridSize * cellSize)/2, (gridSize * cellSize) / 2);
+        transform.position = new Vector3((gridSize / cellSize)/2, (gridSize / cellSize) / 2);
     }
 
     private void Update()
@@ -102,7 +104,7 @@ public class PlayerController : MonoBehaviour
             
         }else if(onFootTile == OnFootTile.Enemy)
         {
-            if(speedBonus >= 0)
+            if(speedBonus >= .05)
             {
                 speedBonus -= speedDecreaserInEnemyPaint;
 
@@ -117,37 +119,98 @@ public class PlayerController : MonoBehaviour
             }
         }
         isWalking = false;
-        
+        //Transform movement
+        ////Up
+        //if (Input.GetAxis("Vertical") > 0 && transform.position.y < maxYPosition - PLAYER_OFFSET)
+        //{
+        //    transform.position += Vector3.up * ySpeed * speedBonus * Time.deltaTime;
+        //    isWalking = true;
+        //}
+
+        ////Down
+        //if (Input.GetAxis("Vertical") < 0 && transform.position.y > cellSize + PLAYER_OFFSET)
+        //{
+        //    transform.position += Vector3.down * -ySpeed * speedBonus * Time.deltaTime;
+        //    isWalking = true;
+        //}
+
+
+        ////Right
+        //if (Input.GetAxis("Horizontal") > 0 && transform.position.x < maxXPosition)
+        //{
+        //    transform.position += Vector3.right * xSpeed * speedBonus * Time.deltaTime;
+        //    isWalking = true;
+        //}
+
+        ////Left
+        //if (Input.GetAxis("Horizontal") < 0 && transform.position.x > cellSize)
+        //{
+        //    transform.position += Vector3.left * -xSpeed * speedBonus * Time.deltaTime;
+        //    isWalking = true;
+        //}
+
+        ////RIgidBodyMovement
+        ////Up
+        //if (Input.GetAxis("Vertical") > 0 && transform.position.y < maxYPosition - PLAYER_OFFSET)
+        //{
+        //    playerRB.AddForce(Vector2.up * ySpeed * speedBonus * Time.deltaTime);
+        //    isWalking = true;
+        //}
+
+        ////Down
+        //if (Input.GetAxis("Vertical") < 0 && transform.position.y > cellSize + PLAYER_OFFSET)
+        //{
+        //    playerRB.AddForce(Vector3.down * ySpeed * speedBonus * Time.deltaTime);
+        //    isWalking = true;
+        //}
+
+
+        ////Right
+        //if (Input.GetAxis("Horizontal") > 0 && transform.position.x < maxXPosition)
+        //{
+        //    playerRB.AddForce(Vector3.right * xSpeed * speedBonus * Time.deltaTime);
+        //    isWalking = true;
+        //}
+
+        ////Left
+        //if (Input.GetAxis("Horizontal") < 0 && transform.position.x > cellSize)
+        //{
+        //    playerRB.AddForce(Vector3.left * xSpeed * speedBonus * Time.deltaTime);
+        //    isWalking = true;
+        //}
+
+        //playerAnimator.SetBool("IsWalking", isWalking);
+
+        //RBTransformMovement
         //Up
-        if (Input.GetAxis("Vertical") > 0 && transform.position.y < maxYPosition - PLAYER_OFFSET)
+        if (Input.GetAxis("Vertical") > 0 && playerRB.position.y < maxYPosition - PLAYER_OFFSET)
         {
-            transform.position += Vector3.up * ySpeed * speedBonus * Time.deltaTime;
+            playerRB.position += Vector2.up * ySpeed * speedBonus * Time.deltaTime;
             isWalking = true;
         }
 
         //Down
-        if (Input.GetAxis("Vertical") < 0 && transform.position.y > cellSize + PLAYER_OFFSET)
+        if (Input.GetAxis("Vertical") < 0 && playerRB.position.y > cellSize + PLAYER_OFFSET)
         {
-            transform.position += Vector3.down * -ySpeed * speedBonus * Time.deltaTime;
+            playerRB.position += Vector2.down * -ySpeed * speedBonus * Time.deltaTime;
             isWalking = true;
         }
 
 
         //Right
-        if (Input.GetAxis("Horizontal") > 0 && transform.position.x < maxXPosition)
+        if (Input.GetAxis("Horizontal") > 0 && playerRB.position.x < maxXPosition)
         {
-            transform.position += Vector3.right * xSpeed * speedBonus * Time.deltaTime;
+            playerRB.position += Vector2.right * xSpeed * speedBonus * Time.deltaTime;
             isWalking = true;
         }
 
         //Left
-        if (Input.GetAxis("Horizontal") < 0 && transform.position.x > cellSize)
+        if (Input.GetAxis("Horizontal") < 0 && playerRB.position.x > cellSize)
         {
-            transform.position += Vector3.left * -xSpeed * speedBonus * Time.deltaTime;
+            playerRB.position += Vector2.left * -xSpeed * speedBonus * Time.deltaTime;
             isWalking = true;
         }
 
-        playerAnimator.SetBool("IsWalking", isWalking);
     }
 
 

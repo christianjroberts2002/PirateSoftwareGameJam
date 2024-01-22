@@ -48,9 +48,15 @@ public class PaintVisualScript : MonoBehaviour
         {
 
             gameObject.layer = 7;
+
             
+            PaintGridSystem.GridPosition gridPosition = PaintGridSystem.Instance.GetGridPosition(new Vector2(1, 1));
+
+            if (gameObject.tag != "Obstacle")
+            {
+                AssignRandomPaintSpotch();
+            }
             
-            AssignRandomPaintSpotch();
 
         }
 
@@ -58,7 +64,6 @@ public class PaintVisualScript : MonoBehaviour
         {
             if(gameObject.layer == 7)
             {
-                Debug.Log("hit");
                 EnemyHealthScript enemyHealthScript = collision.GetComponent<EnemyHealthScript>();
                 float enemyHealth = enemyHealthScript.GetEnemyHealth();
                 enemyHealthScript.TakeDamager(enemyHealth, 1f);
@@ -83,7 +88,11 @@ public class PaintVisualScript : MonoBehaviour
             gameObject.layer = 8;
             
             
-            AssignRandomEnemyPaintSpotch();
+            if(gameObject.tag != "Obstacle")
+            {
+                AssignRandomEnemyPaintSpotch();
+            }
+            
         }
 
     }
@@ -91,6 +100,7 @@ public class PaintVisualScript : MonoBehaviour
 
     private void AssignRandomPaintSpotch()
     {
+
         int randomSprite = UnityEngine.Random.Range(0, randomPaintSpotchSprites.Length);
         spriteRenderer.sprite = randomPaintSpotchSprites[randomSprite];
     }
