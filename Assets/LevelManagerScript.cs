@@ -37,6 +37,7 @@ public class LevelManagerScript : MonoBehaviour
             Destroy(go);
         }
         SceneManager.LoadScene(0);
+        Time.timeScale = 1.0f;
         Destroy(this.gameObject);
     }
 

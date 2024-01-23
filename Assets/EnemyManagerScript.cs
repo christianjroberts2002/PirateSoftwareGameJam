@@ -50,24 +50,27 @@ public class EnemyManagerScript : MonoBehaviour
 
         roundTime = GameManager.Instance.GetLevelTimer();
         Debug.Log(roundTime);
-        spawnEnemyBool = true;
+        spawnEnemyBool = false;
 
         enemySpawnTime = roundTime / enemyWaves;
+        Debug.Log(enemySpawnTime);
 
-        
+
 
     }
 
     private void SceneManager_activeSceneChanged(Scene arg0, Scene arg1)
     {
+        StopAllCoroutines();
         StartCoroutine(EnemySpawnEveryXSeconds(startingSpawnWaitTime));
         roundTime = GameManager.Instance.GetLevelTimer();
         Debug.Log(roundTime);
-        spawnEnemyBool = true;
+        spawnEnemyBool = false;
 
         enemySpawnTime = roundTime / enemyWaves;
+        Debug.Log(enemySpawnTime);
 
-        
+
     }
 
 
@@ -125,7 +128,9 @@ public class EnemyManagerScript : MonoBehaviour
 
     public IEnumerator EnemySpawnEveryXSeconds(float time)
     {
+        Debug.Log(time - Time.deltaTime);
         yield return new WaitForSeconds(time);
+        Debug.Log("Spawn");
         spawnEnemyBool = true;
     }
 

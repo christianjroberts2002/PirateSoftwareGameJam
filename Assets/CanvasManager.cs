@@ -74,22 +74,23 @@ public class CanvasManager : MonoBehaviour
         if (levelTimer == 0)
         {
             OnPlayerWonLevel?.Invoke(this, EventArgs.Empty);
-            playerInfoCanvasGroup.alpha -= alphaEaseInNOut * Time.deltaTime;
+            playerInfoCanvasGroup.alpha -= alphaEaseInNOut * Time.unscaledDeltaTime;
 
         }
 
         if (isDead)
         {
-            playerInfoCanvasGroup.alpha -= alphaEaseInNOut * Time.deltaTime;
+            playerInfoCanvasGroup.alpha -= alphaEaseInNOut * Time.unscaledDeltaTime;
             if (deathAnimationDone)
             {
-                deathCanvasGroup.alpha += alphaEaseInNOut * Time.deltaTime;
+                deathCanvasGroup.alpha += alphaEaseInNOut * Time.unscaledDeltaTime;
             }
 
         }
     }
     private void PlayerHealthScript_OnPlayerDeath(object sender, EventArgs e)
     {
+        Time.timeScale = 0;
         StartCoroutine(WaitForDeathAnimation(deathAnimationTime));
         deathCanvas.enabled = true;
     }
@@ -97,7 +98,7 @@ public class CanvasManager : MonoBehaviour
     private IEnumerator WaitForDeathAnimation(float animationTime)
     {
         isDead = true;
-        yield return new WaitForSeconds(animationTime);
+        yield return new WaitForSecondsRealtime(animationTime);
         deathAnimationDone = true;
     }
 

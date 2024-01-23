@@ -55,6 +55,8 @@ public class PlayerVisual : MonoBehaviour
 
         globalLight.intensity = 1;
         deathLight.enabled = isDead;
+
+        playerAnimator.updateMode = AnimatorUpdateMode.UnscaledTime;
     }
 
     // Update is called once per frame
