@@ -19,6 +19,11 @@ public class CameraManagerScript : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+        
+    }
+
+    private void OnLevelWasLoaded(int level)
+    {
         float screenXResolution = Screen.width;
         float screenYResolution = Screen.height;
 

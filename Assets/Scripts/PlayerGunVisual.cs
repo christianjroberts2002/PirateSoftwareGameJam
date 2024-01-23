@@ -24,18 +24,20 @@ public class PlayerGunVisual : MonoBehaviour
 
     private void Update()
     {
-        Vector3 mousePos = Input.mousePosition;
-        mousePos = Camera.main.ScreenToWorldPoint(mousePos);
-        
-        Vector2 lookDir = new Vector2(mousePos.x - transform.position.x, mousePos.y - transform.position.y);
+        if (!PlayerHealthScript.Instance.GetIsDead())
+        {
+            Vector3 mousePos = Input.mousePosition;
+            mousePos = Camera.main.ScreenToWorldPoint(mousePos);
 
-        transform.right = lookDir;
+            Vector2 lookDir = new Vector2(mousePos.x - transform.position.x, mousePos.y - transform.position.y);
 
-        SetGunLayer();
+            transform.right = lookDir;
 
-        SetGunVisualBasedOnMouseAngle();
+            SetGunLayer();
 
-        
+            SetGunVisualBasedOnMouseAngle();
+
+        }
 
     }
 

@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class PlayerVisual : MonoBehaviour
 {
@@ -21,10 +23,18 @@ public class PlayerVisual : MonoBehaviour
 
     private bool isLookingUp;
 
+    private bool isDead;
+
+    [SerializeField] private Light2D deathLight;
+    [SerializeField] private Light2D globalLight;
+
     public static PlayerVisual Instance;
 
+    
     private void Awake()
     {
+        
+
         if(Instance == null)
         {
             Instance = this;
@@ -40,14 +50,33 @@ public class PlayerVisual : MonoBehaviour
         playerAnimator = GetComponent<Animator>();
         playerSpriteRenderer = GetComponent<SpriteRenderer>(); 
         currentPlayerSprite = playerSprites[0];
-        
+        PlayerHealthScript.OnPlayerDeath += PlayerHealthScript_OnPlayerDeath;
+        isDead = false;
+
+        globalLight.intensity = 1;
+        deathLight.enabled = isDead;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(!isDead)
+        {
+            SetVisualBasedOnMouseAngle();
+        }
+        else
+        {
+            playerAnimator.SetBool("IsDead", isDead);
+            deathLight.enabled = isDead;
+            globalLight.intensity = 0;
+        }
+        
+    }
 
-        SetVisualBasedOnMouseAngle();
+
+    private void PlayerHealthScript_OnPlayerDeath(object sender, EventArgs e)
+    {
+        isDead = true;
     }
 
     private float GetAngleFromProjectionTriangle()

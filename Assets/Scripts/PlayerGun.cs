@@ -44,25 +44,28 @@ public class PlayerGun : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ShootGun();
-
-        if (Input.GetKeyDown(KeyCode.T))
+        if (!PlayerHealthScript.Instance.GetIsDead())
         {
-            if (gunCounter == 0)
+            ShootGun();
+
+            if (Input.GetKeyDown(KeyCode.T))
             {
-                gunCounter++;
-                SwitchGun(gunCounter);
+                if (gunCounter == 0)
+                {
+                    gunCounter++;
+                    SwitchGun(gunCounter);
 
 
+                }
+                else
+                {
+                    gunCounter--;
+                    SwitchGun(gunCounter);
+
+                }
+
+                currentGun.SetCanShoot(true);
             }
-            else
-            {
-                gunCounter--;
-                SwitchGun(gunCounter);
-
-            }
-
-            currentGun.SetCanShoot(true);
         }
     }
 

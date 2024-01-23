@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
@@ -31,6 +32,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D playerRB;
 
     private bool isWalking;
+
+    
 
     public enum OnFootTile
     {
@@ -74,14 +77,19 @@ public class PlayerController : MonoBehaviour
     private void OnLevelWasLoaded(int level)
     {
         //Put him in the center
-        transform.position = new Vector3((gridSize / cellSize)/2, (gridSize / cellSize) / 2);
+        transform.position = startingPosition;
     }
 
     private void Update()
     {
-        MovePlayer();
-        
-        DetectPaintWalkingOn();
+        if(!PlayerHealthScript.Instance.GetIsDead())
+        {
+
+            MovePlayer();
+
+            DetectPaintWalkingOn();
+        }
+
     }
 
     private void LateUpdate()

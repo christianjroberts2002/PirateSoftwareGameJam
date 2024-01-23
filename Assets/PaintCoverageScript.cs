@@ -60,7 +60,11 @@ public class PaintCoverageScript : MonoBehaviour
             {
                 if (PaintGridSystem.Instance.GetIsObstacle(x,y) == true)
                 {
-                    return;
+                    continue;
+                }
+                if(PaintGridSystem.Instance.GetIsNeutral(x,y) == true)
+                {
+                    continue;
                 }
 
                 if (PaintGridSystem.Instance.GetIsFriendlyPaint(x, y))
@@ -90,5 +94,15 @@ public class PaintCoverageScript : MonoBehaviour
     public float GetEnemyPercentCovered()
     {
         return enemyPercentCovered;
+    }
+
+    public float GetFriendlyTiles()
+    {
+        return friendlyTiles;
+    }
+
+    public float GetEnemyTiles()
+    {
+        return enemyTiles;
     }
 }

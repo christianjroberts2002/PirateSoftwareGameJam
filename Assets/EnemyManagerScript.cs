@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,6 +22,9 @@ public class EnemyManagerScript : MonoBehaviour
 
     [SerializeField] private float roundTime;
 
+    public event EventHandler OnRoundOver;
+    
+
     private void Awake()
     {
         if (Instance == null)
@@ -35,18 +39,22 @@ public class EnemyManagerScript : MonoBehaviour
 
     private void Start()
     {
+        roundTime = GameManager.Instance.GetLevelTimer();
+
         spawnEnemyBool = true;
 
         enemySpawnTime = roundTime / enemyWaves;
+
+        
     }
+
+    
 
     private void Update()
     {
-
-
         SpawnEnemy();
-       
-        
+
+
     }
 
     private void SpawnEnemy() {
@@ -58,7 +66,7 @@ public class EnemyManagerScript : MonoBehaviour
 
                 float height = PaintGridSystem.Instance.GetGridHeight();
                 float width = PaintGridSystem.Instance.GetGridWidth();
-                Instantiate(enemy, new Vector3(Random.Range(0, width), Random.Range(0, height), 0), Quaternion.identity);
+                Instantiate(enemy, new Vector3(UnityEngine.Random.Range(0, width), UnityEngine.Random.Range(0, height), 0), Quaternion.identity);
                 spawnEnemyBool = false;
             }
             enemiesPerWave += enemiesPerWaveIncrease;

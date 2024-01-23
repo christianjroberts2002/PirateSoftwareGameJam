@@ -21,6 +21,8 @@ public class PaintVisualScript : MonoBehaviour
 
     [SerializeField] private float repeatRate;
 
+    
+
 
 
 
@@ -32,6 +34,8 @@ public class PaintVisualScript : MonoBehaviour
         CELL_SIZE = PaintGridSystem.Instance.GetCellSize();
         GRID_HEIGHT = (int)(PaintGridSystem.Instance.GetGridHeight() - 1);
         GRID_WIDTH = (int)(PaintGridSystem.Instance.GetGridWidth() - 1);
+
+        
 
     }
 

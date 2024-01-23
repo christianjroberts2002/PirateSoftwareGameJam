@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class PaintGridSystem : MonoBehaviour
 {
@@ -120,6 +121,18 @@ public class PaintGridSystem : MonoBehaviour
     {
 
         if (gridPositions[x, y].isObstacle)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public bool GetIsNeutral(int x, int y)
+    {
+        if (gridPositions[x,y].gameObject.layer == 13)
         {
             return true;
         }
