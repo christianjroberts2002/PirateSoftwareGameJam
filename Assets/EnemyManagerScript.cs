@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EnemyManagerScript : MonoBehaviour
 {
@@ -23,6 +24,8 @@ public class EnemyManagerScript : MonoBehaviour
     [SerializeField] private float roundTime;
 
     public event EventHandler OnRoundOver;
+
+    private float startingSpawnWaitTime = 2f;
     
 
     private void Awake()
@@ -39,8 +42,27 @@ public class EnemyManagerScript : MonoBehaviour
 
     private void Start()
     {
-        roundTime = GameManager.Instance.GetLevelTimer();
+        StartCoroutine(EnemySpawnEveryXSeconds(startingSpawnWaitTime));
+        DontDestroyOnLoad(gameObject);
 
+        SceneManager.activeSceneChanged += SceneManager_activeSceneChanged;
+
+
+        roundTime = GameManager.Instance.GetLevelTimer();
+        Debug.Log(roundTime);
+        spawnEnemyBool = true;
+
+        enemySpawnTime = roundTime / enemyWaves;
+
+        
+
+    }
+
+    private void SceneManager_activeSceneChanged(Scene arg0, Scene arg1)
+    {
+        StartCoroutine(EnemySpawnEveryXSeconds(startingSpawnWaitTime));
+        roundTime = GameManager.Instance.GetLevelTimer();
+        Debug.Log(roundTime);
         spawnEnemyBool = true;
 
         enemySpawnTime = roundTime / enemyWaves;
@@ -48,7 +70,8 @@ public class EnemyManagerScript : MonoBehaviour
         
     }
 
-    
+
+
 
     private void Update()
     {
@@ -57,22 +80,37 @@ public class EnemyManagerScript : MonoBehaviour
 
     }
 
-    private void SpawnEnemy() {
-
+    private void SpawnEnemy() 
+    {
+        
         if (spawnEnemyBool)
         {
+            Debug.Log("Spawn");
             for (int i = 0; i <= enemiesPerWave; i++)
             {
 
-                float height = PaintGridSystem.Instance.GetGridHeight();
-                float width = PaintGridSystem.Instance.GetGridWidth();
-                Instantiate(enemy, new Vector3(UnityEngine.Random.Range(0, width), UnityEngine.Random.Range(0, height), 0), Quaternion.identity);
+                
+                Vector3 randonSpawnPos = GenerateRandomSpawnPos();
+                Instantiate(enemy, randonSpawnPos , Quaternion.identity);
                 spawnEnemyBool = false;
             }
             enemiesPerWave += enemiesPerWaveIncrease;
             StartCoroutine(EnemySpawnEveryXSeconds(enemySpawnTime));
         }
         
+    }
+
+    private Vector3 GenerateRandomSpawnPos()
+    {
+        float height = PaintGridSystem.Instance.GetGridHeight();
+        float width = PaintGridSystem.Instance.GetGridWidth();
+        Vector3 randonSpawnPos = new Vector3(UnityEngine.Random.Range(0, width), UnityEngine.Random.Range(0, height), 0);
+        if (Vector3.Distance(randonSpawnPos, PlayerController.Instance.gameObject.transform.position) < 20f)
+        {
+            randonSpawnPos = GenerateRandomSpawnPos();
+        }
+
+        return randonSpawnPos;
     }
 
     public void EnemySpawned(GameObject enemy)
@@ -89,6 +127,12 @@ public class EnemyManagerScript : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         spawnEnemyBool = true;
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.activeSceneChanged -= SceneManager_activeSceneChanged;
+
     }
 
 }

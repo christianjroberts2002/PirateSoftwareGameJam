@@ -19,7 +19,7 @@ public class CameraManagerScript : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        
+        DontDestroyOnLoad(gameObject);
     }
 
     private void OnLevelWasLoaded(int level)

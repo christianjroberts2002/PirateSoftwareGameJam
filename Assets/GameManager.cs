@@ -19,7 +19,10 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance;
 
-    private int gameLevel = 1;
+    [SerializeField] private int gameLevel = 1;
+
+
+    [SerializeField] private float defaultLevelTime;
 
 
 
@@ -38,8 +41,12 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
-        levelTimer = 60 + (gameLevel * timerMultiplier);
+        DontDestroyOnLoad(gameObject);
+        
+        levelTimer = defaultLevelTime + (gameLevel * timerMultiplier);
     }
+
+   
 
     private void Update()
     {
@@ -52,6 +59,8 @@ public class GameManager : MonoBehaviour
             else
             {
                 levelTimer = 0;
+
+                LevelManagerScript.Instance.LoadNextLevelInfinite();
             }
 
         }
@@ -66,7 +75,7 @@ public class GameManager : MonoBehaviour
     private void OnLevelWasLoaded(int level)
     {
         StartTimer();
-        levelTimer = 60 + (gameLevel * timerMultiplier);
+        levelTimer = defaultLevelTime + (gameLevel * timerMultiplier);
     }
 
     public void StartTimer()

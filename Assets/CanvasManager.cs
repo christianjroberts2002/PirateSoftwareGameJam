@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CanvasManager : MonoBehaviour
 {
@@ -25,7 +26,10 @@ public class CanvasManager : MonoBehaviour
     private float deathAnimationTime = 1.5f;
 
     [SerializeField] private Canvas nextLevelCanvas;
+    [SerializeField] private CanvasGroup nextLevelCanvasGroup;
+
     [SerializeField] private Canvas shopCanvas;
+    [SerializeField] private CanvasGroup shopCanvasGroup;  
 
     private float alphaEaseInNOut = 3f;
 
@@ -39,12 +43,28 @@ public class CanvasManager : MonoBehaviour
         levelTimer = GameManager.Instance.GetLevelTimer();
 
         PlayerHealthScript.OnPlayerDeath += PlayerHealthScript_OnPlayerDeath;
+        SceneManager.activeSceneChanged += SceneManager_activeSceneChanged;
 
-        playerInfoCanvasGroup = playerInfoCanvas.GetComponent<CanvasGroup>();
-
-        deathCanvasGroup = deathCanvas.gameObject.GetComponent<CanvasGroup>();
         deathCanvasGroup.alpha = 0;
         deathCanvas.enabled = false;
+
+        
+    }
+
+    private void SceneManager_activeSceneChanged(Scene arg0, Scene arg1)
+    {
+        playerInfoCanvasGroup.alpha = 1;
+        deathCanvasGroup.alpha = 0;
+        nextLevelCanvasGroup.alpha = 0;
+        shopCanvasGroup.alpha = 0;
+    }
+
+    private void OnLevelWasLoaded(int level)
+    {
+        playerInfoCanvasGroup.alpha = 1;
+        deathCanvasGroup.alpha = 0;
+        nextLevelCanvasGroup.alpha = 0;
+        shopCanvasGroup.alpha = 0;
     }
 
     private void Update()
@@ -85,6 +105,12 @@ public class CanvasManager : MonoBehaviour
     public void StartTimer()
     {
         timerRunning = true;
+    }
+
+    public void OnDestroy()
+    {
+        PlayerHealthScript.OnPlayerDeath -= PlayerHealthScript_OnPlayerDeath;
+        SceneManager.activeSceneChanged -= SceneManager_activeSceneChanged;
     }
 
 }
