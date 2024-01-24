@@ -8,12 +8,16 @@ public class PlayerUpgradeScript : MonoBehaviour
 {
     [SerializeField] private GameObject[] upgradeObjects;
 
-    [SerializeField] private float upgradeCost;
+    [SerializeField] private float upgradeCost = 30f;
 
     [SerializeField] private IUpgrade currentUpgradeScript;
     [SerializeField] private GameObject currentUpgradeScriptGO;
 
     public int shopUpgradeLevel;
+
+    [SerializeField] private TextMeshProUGUI upgradeCostText;
+
+    
 
     
 
@@ -45,6 +49,8 @@ public class PlayerUpgradeScript : MonoBehaviour
 
     private void Start()
     {
+        upgradeCostText.text = "$" + upgradeCost;
+
         SetUpgradeInt();
         SetUpgradeCanvas();
         currentUpgradeScript.SetUpgradeText();
@@ -111,7 +117,13 @@ public class PlayerUpgradeScript : MonoBehaviour
 
     public void UpgradePlayerOnClick()
     {
-        currentUpgradeScript.UpgradePlayer();
+        float playersCash = PlayerMoneyScript.Instance.GetPlayersCash();
+        if (playersCash - upgradeCost >= 0)
+        {
+            currentUpgradeScript.UpgradePlayer();
+            SubtractMoneyFromPlayer();
+        }
+        
     }
 
 

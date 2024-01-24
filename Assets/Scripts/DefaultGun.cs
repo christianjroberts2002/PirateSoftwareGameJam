@@ -197,11 +197,11 @@ public class DefaultGun : MonoBehaviour, IGun
     {
         get
         {
-            return BulletDamage;
+            return bulletDamage;
         }
         set
         {
-            BulletDamage = value;
+            bulletDamage = value;
         }
     }
     public int BulletPenetration
