@@ -126,78 +126,17 @@ public class PlayerController : MonoBehaviour
             }
         }
         isWalking = false;
-        //Transform movement
-        ////Up
-        //if (Input.GetAxis("Vertical") > 0 && transform.position.y < maxYPosition - PLAYER_OFFSET)
-        //{
-        //    transform.position += Vector3.up * ySpeed * speedBonus * Time.deltaTime;
-        //    isWalking = true;
-        //}
-
-        ////Down
-        //if (Input.GetAxis("Vertical") < 0 && transform.position.y > cellSize + PLAYER_OFFSET)
-        //{
-        //    transform.position += Vector3.down * -ySpeed * speedBonus * Time.deltaTime;
-        //    isWalking = true;
-        //}
-
-
-        ////Right
-        //if (Input.GetAxis("Horizontal") > 0 && transform.position.x < maxXPosition)
-        //{
-        //    transform.position += Vector3.right * xSpeed * speedBonus * Time.deltaTime;
-        //    isWalking = true;
-        //}
-
-        ////Left
-        //if (Input.GetAxis("Horizontal") < 0 && transform.position.x > cellSize)
-        //{
-        //    transform.position += Vector3.left * -xSpeed * speedBonus * Time.deltaTime;
-        //    isWalking = true;
-        //}
-
-        ////RIgidBodyMovement
-        ////Up
-        //if (Input.GetAxis("Vertical") > 0 && transform.position.y < maxYPosition - PLAYER_OFFSET)
-        //{
-        //    playerRB.AddForce(Vector2.up * ySpeed * speedBonus * Time.deltaTime);
-        //    isWalking = true;
-        //}
-
-        ////Down
-        //if (Input.GetAxis("Vertical") < 0 && transform.position.y > cellSize + PLAYER_OFFSET)
-        //{
-        //    playerRB.AddForce(Vector3.down * ySpeed * speedBonus * Time.deltaTime);
-        //    isWalking = true;
-        //}
-
-
-        ////Right
-        //if (Input.GetAxis("Horizontal") > 0 && transform.position.x < maxXPosition)
-        //{
-        //    playerRB.AddForce(Vector3.right * xSpeed * speedBonus * Time.deltaTime);
-        //    isWalking = true;
-        //}
-
-        ////Left
-        //if (Input.GetAxis("Horizontal") < 0 && transform.position.x > cellSize)
-        //{
-        //    playerRB.AddForce(Vector3.left * xSpeed * speedBonus * Time.deltaTime);
-        //    isWalking = true;
-        //}
-
-        //playerAnimator.SetBool("IsWalking", isWalking);
-
+       
         //RBTransformMovement
         //Up
-        if (Input.GetAxis("Vertical") > 0 && playerRB.position.y < maxYPosition - PLAYER_OFFSET)
+        if (Input.GetAxis("Vertical") > 0 && playerRB.position.y < maxYPosition - PLAYER_OFFSET + (cellSize / 2))
         {
             playerRB.position += Vector2.up * ySpeed * speedBonus * Time.deltaTime;
             isWalking = true;
         }
 
         //Down
-        if (Input.GetAxis("Vertical") < 0 && playerRB.position.y > cellSize + PLAYER_OFFSET)
+        if (Input.GetAxis("Vertical") < 0 && playerRB.position.y > cellSize + PLAYER_OFFSET + (cellSize / 2))
         {
             playerRB.position += Vector2.down * -ySpeed * speedBonus * Time.deltaTime;
             isWalking = true;
@@ -205,25 +144,32 @@ public class PlayerController : MonoBehaviour
 
 
         //Right
-        if (Input.GetAxis("Horizontal") > 0 && playerRB.position.x < maxXPosition)
+        if (Input.GetAxis("Horizontal") > 0 && playerRB.position.x < maxXPosition + (cellSize / 2))
         {
             playerRB.position += Vector2.right * xSpeed * speedBonus * Time.deltaTime;
             isWalking = true;
         }
 
         //Left
-        if (Input.GetAxis("Horizontal") < 0 && playerRB.position.x > cellSize)
+        if (Input.GetAxis("Horizontal") < 0 && playerRB.position.x > cellSize + (cellSize /2))
         {
             playerRB.position += Vector2.left * -xSpeed * speedBonus * Time.deltaTime;
             isWalking = true;
         }
+
+        playerAnimator.SetBool("IsWalking", isWalking);
 
     }
 
 
     public void SetSpeedMultiplier(float speedBonus)
     {
-        this.speedBonus = speedBonus;
+        this.speedMultiplier += speedBonus;
+    }
+
+    public float GetSpeedMultiplier()
+    {
+        return speedMultiplier;
     }
 
     private void DetectPaintWalkingOn()

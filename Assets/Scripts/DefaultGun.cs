@@ -50,6 +50,9 @@ public class DefaultGun : MonoBehaviour, IGun
     [SerializeField] private float gunBoost;
     [SerializeField] private float gunBoostMultiplier;
 
+    [SerializeField] private float bulletDamage;
+    [SerializeField] private int bulletPenetration;
+
     private void OnEnable()
     {
         for (int i = 0; i < shootDirectionsList.Length; i++)
@@ -190,6 +193,30 @@ public class DefaultGun : MonoBehaviour, IGun
         }
     }
 
+    public float BulletDamage
+    {
+        get
+        {
+            return BulletDamage;
+        }
+        set
+        {
+            BulletDamage = value;
+        }
+    }
+    public int BulletPenetration
+    {
+        get
+        {
+            return bulletPenetration;
+        }
+        set
+        {
+            bulletPenetration = value;
+        }
+    }
+
+
 
     public void ShootGun()
     {
@@ -198,7 +225,11 @@ public class DefaultGun : MonoBehaviour, IGun
             SetGunBoosts();
             canShoot = false;
             GameObject newBullet = Instantiate(BulletPrefab, shootDirectionsList[0].position, shootDirectionsList[0].transform.rotation);
-            
+
+            BulletDamage bulletDamage = newBullet.GetComponent<BulletDamage>();
+            bulletDamage.SetBulletDamage(BulletDamage);
+            bulletDamage.SetBulletPenetration(BulletPenetration);
+
             StartCoroutine(WaitForShootingSpeed(ShootingSpeed));
             Destroy(newBullet, BulletLife);
         }

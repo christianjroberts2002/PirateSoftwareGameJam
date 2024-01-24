@@ -57,7 +57,9 @@ public class PlayerVisual : MonoBehaviour
         deathLight.enabled = isDead;
 
         playerAnimator.updateMode = AnimatorUpdateMode.UnscaledTime;
+        playerAnimator.enabled = true;
     }
+
 
     // Update is called once per frame
     void Update()
@@ -78,6 +80,7 @@ public class PlayerVisual : MonoBehaviour
 
     private void PlayerHealthScript_OnPlayerDeath(object sender, EventArgs e)
     {
+        playerAnimator.enabled = true;
         isDead = true;
     }
 
@@ -129,6 +132,7 @@ public class PlayerVisual : MonoBehaviour
         if (inputAngle > 315 || inputAngle < 45)
         {
             directionInt = 0;
+            playerSpriteRenderer.flipX = false;
             currentPlayerSprite = playerSprites[directionInt];
             isLookingUp = true;
 
@@ -137,6 +141,7 @@ public class PlayerVisual : MonoBehaviour
         else if (inputAngle < 225 && inputAngle > 135)
         {
             directionInt = 1;
+            playerSpriteRenderer.flipX = false;
             currentPlayerSprite = playerSprites[directionInt];
             
 
@@ -145,18 +150,37 @@ public class PlayerVisual : MonoBehaviour
         else if (inputAngle >= 225 && inputAngle <= 315)
         {
             directionInt = 2;
+            playerSpriteRenderer.flipX = true;
             currentPlayerSprite = playerSprites[directionInt];
         }
         //Right
         else if (inputAngle >= 45 && inputAngle <= 135)
         {
-            directionInt = 3;
+            directionInt = 2;
+            playerSpriteRenderer.flipX = false;
             currentPlayerSprite = playerSprites[directionInt];
            
         }
 
         playerAnimator.SetInteger("WalkingDirection", directionInt);
-        playerSpriteRenderer.sprite = currentPlayerSprite;
+        if(playerAnimator.GetBool("IsWalking") == false)
+        {
+            if(!playerAnimator.GetBool("IsDead"))
+            {
+                playerAnimator.enabled = false;
+
+            }
+            else
+            {
+                playerAnimator.enabled = true;
+            }
+            playerSpriteRenderer.sprite = currentPlayerSprite;
+
+        }
+        else
+        {
+            playerAnimator.enabled = true;
+        }
 
     }
 
@@ -170,6 +194,12 @@ public class PlayerVisual : MonoBehaviour
         return angleCFloat;
     }
 
-    
+    private void OnDestroy()
+    {
+        PlayerHealthScript.OnPlayerDeath -= PlayerHealthScript_OnPlayerDeath;
+
+    }
+
+
 }
 

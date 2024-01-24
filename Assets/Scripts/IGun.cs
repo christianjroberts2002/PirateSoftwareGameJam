@@ -20,6 +20,10 @@ public interface IGun
     float GunBoost { get; set; }
     float GunBoostMultiplier { get; set; }
 
+    float BulletDamage { get; set; }
+
+    int BulletPenetration { get; set; }
+
     void ShootGun();
 
     void SetCanShoot(bool canShoot);

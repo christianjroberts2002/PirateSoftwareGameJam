@@ -104,5 +104,10 @@ public class PlayerGun : MonoBehaviour
         return currentGun;
     }
 
+    public GameObject[] GetGuns()
+    {
+        return guns;
+    }
+
    
 }

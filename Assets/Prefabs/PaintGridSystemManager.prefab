@@ -25,13 +25,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8980699645702561419}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -53.16648, y: -49.426254, z: 0.12202161}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2851440423213768403
 MonoBehaviour:
@@ -53,7 +53,7 @@ MonoBehaviour:
   GRID_WIDTH: 50
   CELL_HEIGHT: 1
   CELL_WIDTH: 1
-  startingPos: {x: 1, y: 1}
+  startingPos: {x: 1.5, y: 1.5}
   isAnObstacle: 0
   gridPositionsInt: 0
 --- !u!114 &9176189764809466600
